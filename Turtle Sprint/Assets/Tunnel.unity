@@ -248,7 +248,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 10, y: 2}
   m_Center: {x: 0, y: 0}
 --- !u!50 &1099158922
 Rigidbody2D:
@@ -374,8 +374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a1aac4b6cf24751a7ee909d8f88aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 5
-  spawnDelay: 3
+  spawnTime: .400000006
+  spawnDelay: 1
   enemyPrefab: {fileID: 1099158923}
 --- !u!4 &1569133911
 Transform:
