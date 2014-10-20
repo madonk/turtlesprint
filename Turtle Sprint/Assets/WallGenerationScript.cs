@@ -8,13 +8,17 @@ public class WallGenerationScript : MonoBehaviour {
 	public float spawnDelay = 3f;		// The amount of time before spawning starts.
 	public Transform enemyPrefab;
 
-	private int gap;
-	private int leftX;
+	private double gap;
+	private int prevMid;
 	private System.Random rnd;
+
 	private double screenLeft;
 	private double screenRight;
 	private double screenTop;
 	private double screenBottom;
+
+	private double blockWidth;
+	private double blockHeight;
 	
 	void Start () {
 		rnd = new System.Random ();
@@ -25,17 +29,29 @@ public class WallGenerationScript : MonoBehaviour {
 		screenTop = screenCoords.y;
 		screenBottom = -screenTop;
 
-		gap = 14;
-		leftX = -7;
+		blockWidth = enemyPrefab.collider2D.bounds.extents.x * 2;
+		blockHeight = enemyPrefab.collider2D.bounds.extents.y * 2;
+
+		gap = 4;
+		prevMid = 0;
 
 		// Start calling the Spawn function repeatedly after a delay .
 		InvokeRepeating("Spawn", spawnDelay, spawnTime);
 	}
 	
 	void Spawn () {
-		Instantiate(enemyPrefab, new Vector2(leftX, 7), transform.rotation);
-		Instantiate(enemyPrefab, new Vector2(leftX + gap, 7), transform.rotation);
+		double offset = gap / 2 + blockWidth / 2;
 
-		leftX = rnd.Next (leftX - 1, leftX + 2);
+		Instantiate(enemyPrefab, new Vector2((float) (prevMid - offset), 7), transform.rotation);
+		Instantiate(enemyPrefab, new Vector2((float) (prevMid + offset), 7), transform.rotation);
+
+		double maxOffset = gap / 2 + blockWidth / 2 - 0.1 * blockWidth;
+
+		int leftOffset = prevMid - 1;
+		leftOffset = Math.Max (leftOffset, - (int) maxOffset);
+		int rightOffset = prevMid + 1;
+		rightOffset = Math.Min (rightOffset, (int) maxOffset);
+
+		prevMid = rnd.Next (leftOffset, rightOffset + 1);
 	}
 }
