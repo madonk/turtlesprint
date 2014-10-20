@@ -11,9 +11,20 @@ public class WallGenerationScript : MonoBehaviour {
 	private int gap;
 	private int leftX;
 	private System.Random rnd;
+	private double screenLeft;
+	private double screenRight;
+	private double screenTop;
+	private double screenBottom;
 	
 	void Start () {
 		rnd = new System.Random ();
+
+		Vector2 screenCoords = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+		screenRight = screenCoords.x;
+		screenLeft = - screenRight;
+		screenTop = screenCoords.y;
+		screenBottom = -screenTop;
+
 		gap = 14;
 		leftX = -7;
 
